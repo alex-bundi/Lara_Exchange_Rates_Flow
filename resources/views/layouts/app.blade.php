@@ -13,19 +13,18 @@
     <body class="font-sans antialiased scroll-smooth min-h-screen bg-whiteSmoke">
         <div>
 
-            
-
             <!-- Company Logo -->
-
-            <img src="{{ asset('storage/images/image.jpg') }}" alt=" Company Logo">
-
-
+            {{-- <div class="m-0 p-2">
+                <img src="{{ url('storage/logo/exchange_rate.svg') }}" 
+                    alt="Company Logo"
+                    class="w-14 h-12">
+            </div> --}}
 
             <!-- Page Content -->
-            <main>
+            {{-- <main class="m-0 p-2">
                 {{-- {{ $slot }} --}}
                 @yield('body__content')
-            </main>
+            </main> --}}
         </div>
 
  @if (!isset($excludeNav) || !$excludeNav)
