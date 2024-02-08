@@ -11,20 +11,20 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased scroll-smooth min-h-screen bg-whiteSmoke">
-        <div>
+        <div class="grid grid-cols-1 grid-rows-[100px, auto] gap-y-1">
 
             <!-- Company Logo -->
-            {{-- <div class="m-0 p-2">
+            <div class="m-0 p-2">
                 <img src="{{ url('storage/logo/exchange_rate.svg') }}" 
                     alt="Company Logo"
                     class="w-14 h-12">
-            </div> --}}
+            </div>
 
             <!-- Page Content -->
-            {{-- <main class="m-0 p-2">
+            <main class="m-0 p-2">
                 {{-- {{ $slot }} --}}
                 @yield('body__content')
-            </main> --}}
+            </main>
         </div>
 
  @if (!isset($excludeNav) || !$excludeNav)

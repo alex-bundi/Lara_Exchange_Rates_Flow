@@ -1,7 +1,9 @@
-{{-- @extends('layouts.app')
+@extends('layouts.app')
 
 @section('body__content')
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+    {{-- Authentication --}}
+    <section>
+        <div class="">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
@@ -16,9 +18,14 @@
                 </div>
             @endif
 
-            
         </div>
+    </section>
+
+    <section>
+        <div><H1>Hello there</H1></div>
+    </section>
+       
 @stop
 @php
     $excludeNav = true;
-@endphp --}}
+@endphp
