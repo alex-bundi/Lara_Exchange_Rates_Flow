@@ -21,7 +21,7 @@
             </div>
 
             <!-- Page Content -->
-            <main class="m-0 p-2">
+            <main>
                 {{-- {{ $slot }} --}}
                 @yield('body__content')
             </main>
