@@ -10,7 +10,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased scroll-smooth min-h-screen bg-whiteSmoke">
+    <body class="font-sans antialiased scroll-smooth min-h-screen bg-gradient-to-tr from-lightPink to-lightBlue">
         <div class="grid grid-cols-1 grid-rows-[100px, auto] gap-y-1">
 
             <!-- Company Logo -->
