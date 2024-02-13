@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Facade;
 
 return [
 
+    'myAPIKey_ExchangerateApi' => 'e58eb0e7e4ca48f8ce947089',
+    'exchangerateApiStandardResApi' => 'https://v6.exchangerate-api.com/v6/e58eb0e7e4ca48f8ce947089/latest/USD',
+    
     /*
     |--------------------------------------------------------------------------
     | Application Name
