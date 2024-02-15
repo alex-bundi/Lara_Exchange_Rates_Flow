@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CurrencyCodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/currencyCodeData', [CurrencyCodeController::class, 'getCurrencyCodes']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
