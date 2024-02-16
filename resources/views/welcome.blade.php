@@ -44,6 +44,7 @@
                 {{-- Currency Converter Form --}}
                 <div>
                     <form action="">
+                        @csrf
                         <div class="flex flex-col md:flex-row m-2 space-y-3 md:space-x-4 md:space-y-0 ">
 
                             {{-- Amount --}}

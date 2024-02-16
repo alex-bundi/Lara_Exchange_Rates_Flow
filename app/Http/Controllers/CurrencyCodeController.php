@@ -8,52 +8,34 @@ use Illuminate\Support\Facades\Storage;
 class CurrencyCodeController extends Controller
 {
     public function getCurrencyCodes() {
-        //url('storage/logo/exchange_rate.svg')
-        // try {
-        //     $currencyCodesData = fopen(url('storage/logo/exchange_rate.svg'), 'r');
-        //     echo('$currencyCodesData');
-        // }
-        // catch (Exception $e) {
-        //     return response()->json(['message' => 'unsuccessful']);
-        // }
+       // Responses for the csv endpoint
         $responseType = [
-            'pathNotFound' => 'Path not found',
+            'notFound' => 'Cannot open the file or the file path does not exist',
             'fileNotFound' => 'Cannot open the file',
             'success' => 'success'
         ];
 
         $url = Storage::path('public\csv\Currency Codes.csv'); // Gets the path to the csv file for currency codes.
         
-        if (!Storage::exists($url)) {
-            return response()->json(['message' => $responseType['pathNotFound']]);
+        if (!file_exists($url)) {
+            return response()->json(['message' => $responseType['notFound']]);
         } else {
             $currencyCodesData = fopen($url, 'r');
+
             if ($currencyCodesData === false) {
                 return response()->json(['message' => $responseType['fileNotFound']]);
-            } else {
-                return response()->json(['message' => $responseType['success']]);
-
+            } 
+            while (($row = fgetcsv($currencyCodesData)) !== false) {
+                $data[] = $row;
             }
+ 
+            // close the file
+            fclose($currencyCodesData);
+            return response()->json(['message' => $responseType['success']]);
+            
+
         }
-
-
-        // $currencyCodesData = fopen($url, 'r');
-        // $responseType = [
-        //     'fileNotFound' => 'Cannot open the file'
-        // ];
-
-        // if ($currencyCodesData === false) {
-        //     return response()->json(['message' => $responseType['fileNotFound']]);
-        // } else {
-        //     while (($row = fgetcsv($currencyCodesData)) !== false) {
-        //         $data[] = $row;
-        //     }
-        //     fclose($currencyCodesData);
-        // }
        
     }
 
-    public function test() {
-        
-    }
 }
