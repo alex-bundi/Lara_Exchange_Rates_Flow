@@ -28,16 +28,21 @@ class CurrencyCodeController extends Controller
 
             $currCodeData = [];
             while (($row = fgetcsv($currencyCodesData)) !== false) {
+                $row = array_map('utf8_encode', $row); // Converts each element of the row to UTF-8
+
                 $currCodeData[] = $row;  
             }
             fclose($currencyCodesData);
-            // dd($currCodeData);
 
-            foreach ( $currCodeData as $r) {
-                // Print the array
-                print_r($r);
-            }
-            return response()->json(['message' => $responseType['success']]);
+            return response()->json([$currCodeData]);
+
+
+            // foreach ( $currCodeData as $r) {
+            //     // Print the array
+            //     // print_r($r);
+            //     return response()->json(['message' => $r]);
+            // }
+            // return response()->json(['message' => $responseType['success']]);
             
 
         }

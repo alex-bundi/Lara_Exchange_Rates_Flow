@@ -71,13 +71,15 @@
                                     for="amount">
                                     From
                                 </label>
-                                <input
+                
+                                <select name="" 
                                     class="bg-gray-100 border-2 border-gray-200 rounded-md w-72 py-1.5 px-2 font-sans 
                                         text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500
                                         md:w-64"
-                                    type="text" 
-                                    name="amount" 
-                                    id="">
+                                    id="from">
+                                
+                                
+                                </select>
                             </div>
 
                             {{-- To --}}
@@ -87,13 +89,11 @@
                                     for="to">
                                     To
                                 </label>
-                                <input
+                                <select name="" 
                                     class="bg-gray-100 border-2 border-gray-200 rounded-md w-72 py-1.5 px-2 font-sans 
                                         text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500
                                         md:w-64"
-                                    type="text" 
-                                    name="amount" 
-                                    id="">
+                                    id="to">
                             </div>
                         </div>
                         
