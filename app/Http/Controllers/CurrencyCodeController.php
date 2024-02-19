@@ -35,7 +35,7 @@ class CurrencyCodeController extends Controller
 
             foreach ( $currCodeData as $r) {
                 // Print the array
-                echo implode(', ', $r) . "\n";
+                print_r($r);
             }
             return response()->json(['message' => $responseType['success']]);
             
