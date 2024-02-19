@@ -25,12 +25,18 @@ class CurrencyCodeController extends Controller
             if ($currencyCodesData === false) {
                 return response()->json(['message' => $responseType['fileNotFound']]);
             } 
+
+            $currCodeData = [];
             while (($row = fgetcsv($currencyCodesData)) !== false) {
-                $data[] = $row;
+                $currCodeData[] = $row;  
             }
- 
-            // close the file
             fclose($currencyCodesData);
+            // dd($currCodeData);
+
+            foreach ( $currCodeData as $r) {
+                // Print the array
+                echo implode(', ', $r) . "\n";
+            }
             return response()->json(['message' => $responseType['success']]);
             
 
