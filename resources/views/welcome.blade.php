@@ -43,7 +43,8 @@
 
                 {{-- Currency Converter Form --}}
                 <div>
-                    <form action="">
+                    <form action="" 
+                        id= "conversion_rates">
                         @csrf
                         <div class="flex flex-col md:flex-row m-2 space-y-3 md:space-x-4 md:space-y-0 ">
 
@@ -60,8 +61,13 @@
                                         md:w-64"
                                     type="text" 
                                     name="amount" 
-                                    id=""
+                                    id="currency_amount"
                                     placeholder="$1.00">
+                                <p 
+                                    id='error_message'
+                                    class="hidden pl-2 m-0 font-mono font-semibold text-xxs  tracking-wide">
+                                    Error message
+                                </p>
                             </div>
 
                             {{-- From --}}

@@ -29,7 +29,7 @@ async function getCurrencyCodes () {
                     // To dropdown options
                     let toOptions = document.createElement('option');
                     toOptions.text = `${val[0]} - ${val[2]}`;
-                    toInput.add(toOptions)
+                    toInput.add(toOptions);
                 }  
                 );
             });
@@ -38,9 +38,39 @@ async function getCurrencyCodes () {
     } catch (error) {
         console.error('Error fetching data:', error);
     }
-    
 
-    
 }
 
 getCurrencyCodes();
+
+function getCurrentRates () {
+
+    let ratesForm = document.getElementById('conversion_rates');
+    ratesForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        
+        let amountInput = Number(document.getElementById('currency_amount').value.trim());
+        let fromInput = document.getElementById('from');
+        let toInput = document.getElementById('to');
+
+        if (!amountInput) {
+            error('Please fill in the field to search for value...');
+        }
+    })
+}
+getCurrentRates();
+
+// To display input error messages
+error (message) {
+    
+    this.message = message;
+    const errorMessageElement = document.getElementById('error_message');
+
+    errorMessageElement.textContent = this.message;
+    errorMessageElement.style.visibility = "visible";
+    errorMessageElement.style.color = "red";
+
+    setTimeout(() => errorMessageElement.remove(), 3000); // Remove warning after 3 secs
+}
+
+
