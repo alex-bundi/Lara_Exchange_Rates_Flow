@@ -43,6 +43,19 @@ async function getCurrencyCodes () {
 
 getCurrencyCodes();
 
+// To display input error messages
+function error (message) {
+    
+    message = message;
+    const errorMessageElement = document.getElementById('error_message');
+
+    errorMessageElement.textContent = message;
+    errorMessageElement.style.visibility = "visible";
+    errorMessageElement.style.color = "red";
+
+    setTimeout(() => errorMessageElement.remove(), 3000); // Remove warning after 3 secs
+}
+
 function getCurrentRates () {
 
     let ratesForm = document.getElementById('conversion_rates');
@@ -52,7 +65,7 @@ function getCurrentRates () {
         let amountInput = Number(document.getElementById('currency_amount').value.trim());
         let fromInput = document.getElementById('from');
         let toInput = document.getElementById('to');
-
+        console.log(amountInput);
         if (!amountInput) {
             error('Please fill in the field to search for value...');
         }
@@ -60,17 +73,5 @@ function getCurrentRates () {
 }
 getCurrentRates();
 
-// To display input error messages
-error (message) {
-    
-    this.message = message;
-    const errorMessageElement = document.getElementById('error_message');
-
-    errorMessageElement.textContent = this.message;
-    errorMessageElement.style.visibility = "visible";
-    errorMessageElement.style.color = "red";
-
-    setTimeout(() => errorMessageElement.remove(), 3000); // Remove warning after 3 secs
-}
 
 
