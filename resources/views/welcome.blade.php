@@ -83,8 +83,6 @@
                                         text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500
                                         md:w-64"
                                     id="from">
-                                
-                                
                                 </select>
                             </div>
 
@@ -100,8 +98,10 @@
                                         text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500
                                         md:w-64"
                                     id="to">
+                                </select>
                             </div>
                         </div>
+                       
                         
                         {{-- User Alert --}}
                         <div class="flex flex-col md:flex-row md:space-x-16">
@@ -112,9 +112,10 @@
 
                                 <p>
                                     We use the mid-market rate for our Converter. This is for informational purposes only. 
-                                    You won’t receive this rate when sending money. 
+                                    You wont receive this rate when sending money. 
                                 </p>
                             </div>
+                        
 
                             <div class="m-2 order-first md:order-last">
                                 <input type="submit"
@@ -124,8 +125,9 @@
                                     name="" 
                                     id="">
                             </div>
-                            
                         </div>
+                            
+                        
                     
                     </form>
                 

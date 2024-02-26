@@ -18,7 +18,10 @@ use App\Http\Controllers\CurrencyCodeController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Home Page
 Route::get('/currencyCodeData', [CurrencyCodeController::class, 'getCurrencyCodes']);
+Route::post('/postRates',  [CurrencyCodeController::class, 'postConversionRates']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
