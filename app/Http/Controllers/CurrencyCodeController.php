@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class CurrencyCodeController extends Controller
 {
@@ -36,14 +37,6 @@ class CurrencyCodeController extends Controller
             fclose($currencyCodesData);
 
             return response()->json([$currCodeData]);
-
-
-            // foreach ( $currCodeData as $r) {
-            //     // Print the array
-            //     // print_r($r);
-            //     return response()->json(['message' => $r]);
-            // }
-            // return response()->json(['message' => $responseType['success']]);
             
 
         }
@@ -51,9 +44,25 @@ class CurrencyCodeController extends Controller
     }
 
     public function postConversionRates (Request $request) {
-        $userRatesInput = $request->all();
-        session(['rates' => $userRatesInput]);
-        return response()->json(['message' => $this->responseType['success']]);
+        $userRatesInput = json_decode($request->getContent(), true); // Decode the raw JSON
+        $userData = $userRatesInput['data'];
+        
+        
+        $values = [
+            'amount' => $userData["amount"],
+            'fromCurrency' => $userData['fromCurrency'],
+            'toCurrency' => $userData['toCurrency']
+        ];
+        
+        $request->session()->put('values', $values);
+        return response()->json([$values]);
+    }
+
+    private function sendRates () {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|unique:posts|max:255',
+            'body' => 'required',
+        ]);
     }
 
 }

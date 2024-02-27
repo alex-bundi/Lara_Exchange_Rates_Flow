@@ -44,14 +44,19 @@ async function getCurrencyCodes () {
 getCurrencyCodes();
 
 // To display input error messages
-function error (message) {
+function error(message) {
     const errorMessageElement = document.getElementById('error_message');
     
-    errorMessageElement.textContent = message;
-    errorMessageElement.classList.remove("hidden");
-    errorMessageElement.style.color = "red";
+    if (errorMessageElement) {
+        errorMessageElement.textContent = message;
+        errorMessageElement.classList.remove("hidden");
+        errorMessageElement.style.color = "red";
 
-    setTimeout(() => errorMessageElement.remove(), 10000); // Remove warning after 3 secs
+        setTimeout(() => errorMessageElement.remove(), 10000); // Remove warning after 10 secs
+    } else {
+        // console.error("Error message element not found");
+        location.reload(); // Avoids the element being null
+    }
 }
 
 function getCurrentRates () {
@@ -69,28 +74,36 @@ function getCurrentRates () {
         }
         if (amountInput ===  0) {
             error('Please input a number.');
+        } else {
+            let fromCode = fromInput.trim().split('-');
+            let toCode = toInput.trim().split('-');
+
+            let convertRates = {
+                amount: amountInput,
+                fromCurrency: fromCode[0],
+                toCurrency: toCode[0]
+            } 
+
+            let token = document.querySelector('input[name=_token').value;
+            let url = 'http://127.0.0.1:8000/postRates';
+
+            fetch(url, {
+                method:'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-Token': token
+                },
+                body: JSON.stringify({
+                    data:convertRates
+                })
+            })
+            .then(function(res){
+                console.log(res.text())
+            })
         }
 
-        let fromCode = fromInput.trim().split('-');
-        let toCode = toInput.trim().split('-');
-        let convertRates = [amountInput, fromCode[0], toCode[0]]
-        let token = document.querySelector('input[name=_token').value;
-        let url = 'http://127.0.0.1:8000/postRates';
-
-        fetch(url, {
-            method:'POST',
-            headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRF-Token': token
-            },
-            body: JSON.stringify({
-                data:convertRates
-            })
-        })
-        .then(function(res){
-            console.log(res.text())
-        })
+        
 
     })
 }
