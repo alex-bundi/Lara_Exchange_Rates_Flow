@@ -55,14 +55,14 @@ class CurrencyCodeController extends Controller
         ];
         
         $request->session()->put('values', $values);
-        return response()->json([$values]);
+        return response()->json(['message'=> 'success']);
     }
 
-    private function sendRates () {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|unique:posts|max:255',
-            'body' => 'required',
-        ]);
-    }
+    // private function sendRates () {
+    //     $validator = Validator::make($request->all(), [
+    //         'title' => 'required|unique:posts|max:255',
+    //         'body' => 'required',
+    //     ]);
+    // }
 
 }
