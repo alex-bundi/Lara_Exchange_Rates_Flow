@@ -44,25 +44,33 @@ class CurrencyCodeController extends Controller
     }
 
     public function postConversionRates (Request $request) {
-        $userRatesInput = json_decode($request->getContent(), true); // Decode the raw JSON
-        $userData = $userRatesInput['data'];
+
+    
+            $userRatesInput = json_decode($request->getContent(), true); // Decode the raw JSON
+                $validator = Validator::make($userRatesInput, [
+                    'amount' => ['bail', 'required', "regex:/^\d+\.?\d*$/"],
+                    'fromCurrency' => 'required|string',
+                    'toCurrency' => 'required|string'
+            ]);
+            $validated = $validator->validated();
+            return response()->json([$validator]);
+
+        
+
+        // $userData = $userRatesInput['data'];
         
         
-        $values = [
-            'amount' => $userData["amount"],
-            'fromCurrency' => $userData['fromCurrency'],
-            'toCurrency' => $userData['toCurrency']
-        ];
+        // $values = [
+        //     'amount' => $userData["amount"],
+        //     'fromCurrency' => $userData['fromCurrency'],
+        //     'toCurrency' => $userData['toCurrency']
+        // ];
         
-        $request->session()->put('values', $values);
-        return response()->json(['message'=> 'success']);
+        // $request->session()->put('values', $values);
     }
 
-    // private function sendRates () {
-    //     $validator = Validator::make($request->all(), [
-    //         'title' => 'required|unique:posts|max:255',
-    //         'body' => 'required',
-    //     ]);
-    // }
+    private function sendRates () {
+        
+    }
 
 }

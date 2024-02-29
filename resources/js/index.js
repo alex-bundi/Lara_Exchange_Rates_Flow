@@ -65,15 +65,15 @@ function getCurrentRates () {
     ratesForm.addEventListener('submit', (event) => {
         event.preventDefault();
         
-        let amountInput = Number(document.getElementById('currency_amount').value.trim());
+        let amountInput = parseFloat(document.getElementById('currency_amount').value.trim());
         let fromInput = document.getElementById('from').value;
         let toInput = document.getElementById('to').value.trim();
         
         if (!amountInput) {
-            error('Please fill in the field to search for value...');
+            return error('Please fill in the field...');
         }
         if (amountInput ===  0) {
-            error('Please input a number.');
+            return error('Please input a number.');
         } else {
             let fromCode = fromInput.trim().split('-');
             let toCode = toInput.trim().split('-');
@@ -99,8 +99,10 @@ function getCurrentRates () {
                 })
             })
             .then(function(res){
-                console.log(res.text())
+                console.log(res.text());
             })
+            .catch((error) => console.error('There is no response'))
+
         }
 
         
