@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 
 class CurrencyCodeController extends Controller
 {
@@ -12,7 +13,8 @@ class CurrencyCodeController extends Controller
     public $responseType = [
         'notFound' => 'Cannot open the file or the file path does not exist.',
         'fileNotFound' => 'Cannot open the file.',
-        'success' => 'Success'
+        'success' => 'Success',
+        'failed' => 'Invalid Inputs'
     ];
 
     public function getCurrencyCodes() {
@@ -44,17 +46,26 @@ class CurrencyCodeController extends Controller
     }
 
     public function postConversionRates (Request $request) {
-
-    
-            $userRatesInput = json_decode($request->getContent(), true); // Decode the raw JSON
-                $validator = Validator::make($userRatesInput, [
-                    'amount' => ['bail', 'required', "regex:/^\d+\.?\d*$/"],
-                    'fromCurrency' => 'required|string',
-                    'toCurrency' => 'required|string'
+        
+        $userRatesInput = json_decode($request->getContent(), true); // Decode the raw JSON
+        
+        $validator = Validator::make($userRatesInput['data'], [
+            'amount' => ['bail', 'required', "regex:/^\d+\.?\d*$/"],
+            'fromCurrency' => 'required|string',
+            'toCurrency' => 'required|string'
             ]);
-            $validated = $validator->validated();
-            return response()->json([$validator]);
+        $validated = $validator->validated();
+        
+        if ($validator->fails()){
+            return response()->json(['message'=> 'failed']);
+        }
+        else {
+            session(['validatedData' => $validated]);
+            // $this->sendRates($validated);
+            return response()->json(['message' => $this->responseType['success']]);
 
+        }
+        
         
 
         // $userData = $userRatesInput['data'];
@@ -68,9 +79,16 @@ class CurrencyCodeController extends Controller
         
         // $request->session()->put('values', $values);
     }
+    
 
-    private function sendRates () {
-        
+    public function sendRates () {
+        // $requestedRates
+        $url = config('app.exchangerateApiPairConversion') . '/' .config('app.myAPIKey') . '/' . 'pair' . '/EUR/GBP';
+        $validatedData = session('validatedData');
+        // $exchangeResponse = Http::get($url);
+        dd(session('validatedData'));
+
     }
+    
 
 }

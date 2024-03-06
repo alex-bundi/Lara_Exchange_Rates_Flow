@@ -70,7 +70,7 @@ function getCurrentRates () {
         let toInput = document.getElementById('to').value.trim();
         
         if (!amountInput) {
-            return error('Please fill in the field...');
+            return error('Please fill in this field...');
         }
         if (amountInput ===  0) {
             return error('Please input a number.');
@@ -98,8 +98,15 @@ function getCurrentRates () {
                     data:convertRates
                 })
             })
-            .then(function(res){
-                console.log(res.text());
+            .then(res => res.text())
+            .then((res) => {
+                let responseType = JSON.parse(res)
+                if (responseType.message === 'Success'){
+                   
+                }else {
+                    console.error('There is no response');
+                }
+                
             })
             .catch((error) => console.error('There is no response'))
 
