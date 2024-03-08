@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
+
 
 class CurrencyCodeController extends Controller
 {
@@ -16,6 +18,7 @@ class CurrencyCodeController extends Controller
         'success' => 'Success',
         'failed' => 'Invalid Inputs'
     ];
+    public $userData;
 
     public function getCurrencyCodes() {
 
@@ -60,33 +63,28 @@ class CurrencyCodeController extends Controller
             return response()->json(['message'=> 'failed']);
         }
         else {
-            session(['validatedData' => $validated]);
-            // $this->sendRates($validated);
+            // 
+
+            // Store validated data in session
+            Session::put('userData', [
+                'amount' => floatval(trim($validated["amount"])),
+                'fromCurrency' => trim($validated['fromCurrency']),
+                'toCurrency' => trim($validated['toCurrency'])
+            ]);
             return response()->json(['message' => $this->responseType['success']]);
 
         }
-        
-        
 
-        // $userData = $userRatesInput['data'];
-        
-        
-        // $values = [
-        //     'amount' => $userData["amount"],
-        //     'fromCurrency' => $userData['fromCurrency'],
-        //     'toCurrency' => $userData['toCurrency']
-        // ];
-        
-        // $request->session()->put('values', $values);
     }
     
 
     public function sendRates () {
-        // $requestedRates
-        $url = config('app.exchangerateApiPairConversion') . '/' .config('app.myAPIKey') . '/' . 'pair' . '/EUR/GBP';
-        $validatedData = session('validatedData');
-        // $exchangeResponse = Http::get($url);
-        dd(session('validatedData'));
+        $userData = Session::get('userData');
+        $url = config('app.exchangerateApiPairConversion') . config('app.myAPIKey') . '/' . 'pair' . "/{$userData['fromCurrency']}/{$userData['toCurrency']}" . "/{$userData['amount']}";
+        
+        $exchangeResponse = Http::get($url);
+        // $userData['amount']
+        dd($exchangeResponse->body());
 
     }
     

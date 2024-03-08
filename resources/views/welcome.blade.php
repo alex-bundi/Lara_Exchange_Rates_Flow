@@ -24,6 +24,15 @@
     <section>
         {{-- Background Image & Main Container  --}}
         <div class="flex justify-center">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <div class="bg-whiteSmoke m-0 p-2 rounded-md basis-11/12">
                 {{-- Header --}}

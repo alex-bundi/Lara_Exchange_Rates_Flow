@@ -101,14 +101,14 @@ function getCurrentRates () {
             .then(res => res.text())
             .then((res) => {
                 let responseType = JSON.parse(res)
-                if (responseType.message === 'Success'){
+                // if (responseType.message === 'Success'){
                    
-                }else {
-                    console.error('There is no response');
-                }
-                
+                // }else {
+                //     console.error('There is no response');
+                // }
+                console.log(responseType.message);
             })
-            .catch((error) => console.error('There is no response'))
+            .catch((error) => console.error(error))
 
         }
 
