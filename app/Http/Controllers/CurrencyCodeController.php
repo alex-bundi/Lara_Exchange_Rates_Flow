@@ -63,8 +63,6 @@ class CurrencyCodeController extends Controller
             return response()->json(['message'=> 'failed']);
         }
         else {
-            // 
-
             // Store validated data in session
             Session::put('userData', [
                 'amount' => floatval(trim($validated["amount"])),
@@ -79,13 +77,23 @@ class CurrencyCodeController extends Controller
     
 
     public function sendRates () {
-        $userData = Session::get('userData');
-        $url = config('app.exchangerateApiPairConversion') . config('app.myAPIKey') . '/' . 'pair' . "/{$userData['fromCurrency']}/{$userData['toCurrency']}" . "/{$userData['amount']}";
-        
-        $exchangeResponse = Http::get($url);
-        // $userData['amount']
-        dd($exchangeResponse->body());
+        try {
+            $userData = Session::get('userData');
+            $url = config('app.exchangerateApiPairConversionj') . config('app.myAPIKey') . '/' . 'pair' . "/{$userData['fromCurrency']}/{$userData['toCurrency']}" . "/{$userData['amount']}";
+            $exchangeResponse = Http::get($url);
+        }
+        catch (\Exception $exe){
 
+            if ($exe instanceof \Illuminate\Http\Client\ConnectionException ){
+                // dd($exe->getMessage());
+                return redirect('/')->withErrors([
+                    'error' => 'An error occurred while processing your request. Please try again later.'
+                ]);
+            } else {
+                return redirect('/')->with('exe', $exe->getMessage());
+            }      
+            
+        }
     }
     
 
