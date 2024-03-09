@@ -59,7 +59,7 @@ function error(message) {
     }
 }
 
-function getCurrentRates () {
+function postUserRequest () {
 
     let ratesForm = document.getElementById('conversion_rates');
     ratesForm.addEventListener('submit', (event) => {
@@ -101,12 +101,12 @@ function getCurrentRates () {
             .then(res => res.text())
             .then((res) => {
                 let responseType = JSON.parse(res)
-                // if (responseType.message === 'Success'){
-                   
-                // }else {
-                //     console.error('There is no response');
-                // }
-                console.log(responseType.message);
+                if (responseType.message === 'Success'){
+                    console.log(responseType.message);
+
+                }else {
+                    console.error('There is no response');
+                }
             })
             .catch((error) => console.error(error))
 
@@ -116,7 +116,19 @@ function getCurrentRates () {
 
     })
 }
-getCurrentRates();
+
+
+async function getCurrencyRates () {
+    let url = 'http://127.0.0.1:8000/sendRates'
+    fetch (await url)
+    .then(res => console.log(res.text()))
+    // .then(res => {
+    //     // let currentExchangeRates = JSON.parse(res);
+    //     console.log(res);
+    // })
+}
+postUserRequest();
+getCurrencyRates();
 
 
 

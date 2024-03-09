@@ -79,8 +79,22 @@ class CurrencyCodeController extends Controller
     public function sendRates () {
         try {
             $userData = Session::get('userData');
-            $url = config('app.exchangerateApiPairConversionj') . config('app.myAPIKey') . '/' . 'pair' . "/{$userData['fromCurrency']}/{$userData['toCurrency']}" . "/{$userData['amount']}";
+            $url = config('app.exchangerateApiPairConversion') . config('app.myAPIKey') . '/' . 'pair' . "/{$userData['fromCurrency']}/{$userData['toCurrency']}" . "/{$userData['amount']}";
             $exchangeResponse = Http::get($url);
+            $apiResponse = json_decode($exchangeResponse->body(), true);
+            // dd($apiResponse['result']);
+            if ($apiResponse['result'] === 'success') {
+                $currentRates = [
+                    'userAmount' => $userData['amount'],
+                    'baseCode' => $apiResponse['base_code'],
+                    'targetCode' => $apiResponse['target_code'],
+                    'conversionRate' => $apiResponse['conversion_rate'],
+                    'conversionResult' => $apiResponse['conversion_result']
+                ];
+                return $currentRates;
+            } else {
+                return $apiResponse['result'];
+            }
         }
         catch (\Exception $exe){
 
@@ -90,7 +104,7 @@ class CurrencyCodeController extends Controller
                     'error' => 'An error occurred while processing your request. Please try again later.'
                 ]);
             } else {
-                return redirect('/')->with('exe', $exe->getMessage());
+                return $exe->getMessage();
             }      
             
         }
