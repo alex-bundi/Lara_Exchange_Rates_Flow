@@ -121,11 +121,40 @@ function postUserRequest () {
 async function getCurrencyRates () {
     let url = 'http://127.0.0.1:8000/sendRates'
     fetch (await url)
-    .then(res => console.log(res.text()))
-    // .then(res => {
-    //     // let currentExchangeRates = JSON.parse(res);
-    //     console.log(res);
-    // })
+    .then(res => res.text())
+    .then(res => {
+        let currentExchangeRates = JSON.parse(res);
+
+        if (currentExchangeRates.success){
+            // currentExchangeRates.success['userAmount']
+            console.log(currentExchangeRates.success['userAmount'])
+
+            let ratesContainer = document.getElementById('current-rates');
+            let userAmount = document.getElementById('user-amount');
+            let baseCurrency = document.getElementById('base-currency');
+            let conversionResult = document.getElementById('conversion-result');
+            let baseCode = document.getElementById('base-code');
+
+
+            userAmount.textContent = currentExchangeRates.success['userAmount'];
+            baseCurrency.textContent = currentExchangeRates.success['baseCode'];
+            conversionResult.textContent = currentExchangeRates.success['conversionResult'];
+            baseCode.textContent = currentExchangeRates.success['targetCode'];
+
+        } else if (currentExchangeRates.apiResponseError) {
+
+            let apiError = document.getElementById('error-message');
+            let errorText = document.getElementById('error-text');
+            apiError.classList.remove('hidden');
+            errorText.textContent = 'An error occurred while processing your request. Please try again later.';
+
+        } else if (currentExchangeRates.anyError) {
+            let apiError = document.getElementById('error-message');
+            let errorText = document.getElementById('error-text');
+            apiError.classList.remove('hidden');
+            errorText.textContent = currentExchangeRates.anyError;
+        }
+    })
 }
 postUserRequest();
 getCurrencyRates();

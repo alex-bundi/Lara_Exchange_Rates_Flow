@@ -21,30 +21,27 @@
         </div>
     </section>
     <section>
-    
-    </section>
-        @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="flex justify-center p-2 m-2">
-                        @foreach ($errors->all() as $error)
-                            <div id="error-message" class="flex flex-row p-4 space-x-2 bg-errorRed rounded-md">
-                                <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <li class=" font-sans font-semibold text-white">
-                                        {{ $error }}
-                                    </li>
-                                </div>
-                                
-                            </div>
-                            
-                        @endforeach
-                    </ul>
+        <div class="alert alert-danger hidden" id="error-message" >
+            <ul class="flex justify-center p-2 m-2">
+                
+                <div class="flex flex-row p-4 space-x-2 bg-errorRed rounded-md">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <li class=" font-sans font-semibold text-white" id="error-text">
+                            Error
+                        </li>
+                    </div>
+                    
                 </div>
-            @endif
+            </ul>
+        </div>
+    </section>
+        
+    
     <section>
         {{-- Background Image & Main Container  --}}
         <div class="flex justify-center">
@@ -126,6 +123,37 @@
                                 </select>
                             </div>
                         </div>
+
+                        {{-- Conversion rates --}}
+                        <section> 
+                            <div id="current-rates" class="m-4">
+                                <div class="flex flex-row space-x-2 text-xl">
+                                    <h2 id="user-amount"
+                                        class="font-sans font-semibold">
+                                        100.0
+                                    </h2>
+                                    <p id="base-currency"
+                                        class="font-sans font-semibold ">
+                                        USD
+                                    </p>
+                                    <p class="font-sans font-semibold text-sm">=</p>
+                                </div>
+
+                                <div class="flex flex-row space-x-2 text-3xl">
+                                    <h2 id="conversion-result"
+                                        class="font-sans font-semibold">
+                                        1400
+                                    </h2>
+                                    <p id="base-code"
+                                        class="font-sans font-semibold ">
+                                        KES
+                                    </p>
+                                </div>
+                                
+                            
+                            </div>
+                        
+                        </section>
                        
                         
                         {{-- User Alert --}}

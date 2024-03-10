@@ -16,7 +16,8 @@ class CurrencyCodeController extends Controller
         'notFound' => 'Cannot open the file or the file path does not exist.',
         'fileNotFound' => 'Cannot open the file.',
         'success' => 'Success',
-        'failed' => 'Invalid Inputs'
+        'failed' => 'Invalid Inputs',
+        'apiResponseError' => 'An error occurred while processing your request. Please try again later.'
     ];
     public $userData;
 
@@ -91,7 +92,7 @@ class CurrencyCodeController extends Controller
                     'conversionRate' => $apiResponse['conversion_rate'],
                     'conversionResult' => $apiResponse['conversion_result']
                 ];
-                return $currentRates;
+                return response()->json(['success' => $currentRates]);
             } else {
                 return $apiResponse['result'];
             }
@@ -99,12 +100,10 @@ class CurrencyCodeController extends Controller
         catch (\Exception $exe){
 
             if ($exe instanceof \Illuminate\Http\Client\ConnectionException ){
-                // dd($exe->getMessage());
-                return redirect('/')->withErrors([
-                    'error' => 'An error occurred while processing your request. Please try again later.'
-                ]);
+                return response()->json(['apiResponseError' => $this->responseType['apiResponseError']]);
             } else {
-                return $exe->getMessage();
+                return response()->json(['anyError' => $exe->getMessage()]);
+                
             }      
             
         }
